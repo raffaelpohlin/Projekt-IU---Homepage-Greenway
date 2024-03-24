@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html lang="de">
+
+<head>
+    <title>GreenWay Foundation</title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="imports"
+        href="https://unpkg.com/vue@3.4.21/dist/vue.esm-browser.js">
+    <link rel="vue/server-renderer"
+        href="https://cdn.jsdelivr.net/npm/@vue/server-renderer@3.4.21/dist/server-renderer.esm-browser.js">
+    <link name='view' src="https://unpkg.com/vue@3/dist/vue.global.js">
+</head>
+
+<style>
+    /* Styling des Grundlayouts */
+    
+    header {
+        background-color: rgb(194, 223, 194);
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    header div {justify-content:space-between;}
+    
+    header .greenway {
+        width: 200px;
+        margin: 5px;
+        cursor: pointer;
+    }
+    
+    header div p {
+        cursor: default;
+    }
+    
+    header div .logo {
+        padding: 1%;
+        margin: 0cqb;
+    }
+    
+    header div .text {
+        padding: 1%;
+        margin: 0%;
+    }
+    
+    header div .suche {
+        padding: 1%;
+        margin: 1%;
+    }
+    
+        main {
+            display: flex;
+            width: 100%;
+        }
+    
+        main nav {
+            flex-direction: column;
+            flex-wrap: wrap;
+            width: 20%;
+            padding: 0%;
+            margin: 0%;
+            background-color: white;
+    
+        }
+    
+        main nav ul {
+            padding: 1%;
+            margin: 1%;
+            flex-direction: column;
+            list-style-type: none;
+    
+            
+        }
+    
+        main nav li {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid black;
+            
+        }
+    
+        main nav li a {
+            display: flex;
+            color: black;
+            text-decoration: none;
+            font-size: x-large;
+        }
+    
+        main nav li:hover {
+            background-color: green;
+            
+        }
+    
+    
+    
+        main div {
+            width: 80%;
+            flex-wrap: wrap;
+            padding: 0%;
+    
+        }
+    
+        section {
+            border: 1ßx solid white;
+            border-radius: 0.5em;
+            margin: 1%;
+            padding: 1%;
+        }
+
+        #component {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #app{
+            width: 100%;
+            padding: 1%;
+
+        }
+        #search {
+            padding: 1%;
+        }
+
+        #search input {
+            display: inline-flex;
+        }
+
+        table {
+            width: 100%;
+            border: 2px solid #42b983;
+            border-radius: 3px;
+            background-color: #fff;
+        }
+
+        table th {
+            background-color: #42b983;
+            color: rgba(255, 255, 255, 0.66);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        table td {
+            background-color: #f9f9f9;
+        }
+
+        
+
+        th,
+        td {
+            min-width: auto;
+            padding: 1% 2%;
+        }
+
+        table th.active {
+            color: #fff;
+        }
+
+        table th.active .arrow {
+            opacity: 1;
+        }
+
+    
+        footer {
+            position: relative;
+            bottom: 0px;
+            background-color: rgb(194, 223, 194);
+            flex-direction: row;
+        }
+    
+        footer div .links {
+            padding-top: 1%;
+            padding-bottom: 1%;
+    
+        }
+    
+        footer div .socials {
+            padding-top: 1%;
+            padding-bottom: 1%;
+        }
+    
+        footer div {justify-content: center;}
+    
+        footer .linkedin {
+            width: 50px;
+            margin: 5px;
+        }
+        
+        footer .facebook {
+            width: 50px;
+            margin: 5px;
+        }
+    
+        footer .instagram {
+            width: 50px;
+            margin: 5px;
+        }
+    
+        footer .contact {
+            width: 50px;
+            margin: 5px;
+    }
+    
+    /* Anpassung des Website-Style und der Position der Komponenten für Tablets*/
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+        header div {
+            display:flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content:center;
+        }
+    
+        header div .logo {
+        padding: 1%;
+        margin: 0%;
+    }
+    
+    header div .text {
+        padding: 1%;
+        margin: 1%;
+    }
+    
+    header div .suche {
+        padding: 0%;
+        margin: 2%;
+    }
+    
+        main {
+            display:inline
+        }
+    
+        main nav {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            padding: 0%;
+            margin: 0%;
+        }
+        main nav ul {
+            width: 100%;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            font-size: small;
+            
+        }
+    
+        main nav li {
+            display: flex;
+            flex-direction: column;
+            margin:1%;
+            border-bottom: none;
+        }
+    
+        main div {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+    
+        }
+        
+        footer div {
+            display:flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            align-items:center;
+            padding: 0;
+            margin: 0;
+        }
+    }
+    
+    /* Anpassung des Website-Style und der Position der Komponenten für mobile Anwendungen*/
+        @media screen and (max-width: 768px) {
+        header div {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    
+        header div .logo {
+            padding:0%;
+            margin: 0%;
+        }
+    
+        header div .text {
+            padding:0%;
+            margin: 0%;
+        }
+    
+        header div .suche {
+            padding:0%;
+            margin: 2%;
+        }
+    
+        main {
+            display:inline;
+        }
+    
+        main nav {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            padding: 0%;
+            margin: 0%;
+        }
+        main nav ul {
+            width: 100%;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            font-size: small;
+            
+        }
+    
+        main nav li {
+            display: flex;
+            flex-direction: column;
+            margin:1%;
+            border-bottom: none;
+            
+        }
+    
+        main nav li a {
+            color: black;
+            text-decoration: none;
+            font-size: small;
+        }
+    
+        main div {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+    
+        }
+    
+    #list   {
+        display:block;
+    
+        }
+    
+    #app {
+        justify-content: center;
+    }
+
+    table {
+        font-size: small;
+    }
+
+
+        
+        footer div {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            
+        }
+        
+    }
+    
+    </style>
+
+<body>
+
+    <!--Entwerfen der Kopfzeile mit Logo und Name der Firma sowie einem globalen Suchfeld -->
+        <header>
+            <div class="d-flex">
+                    <div class="logo">
+                        <p class="fs-1 fw-bold">
+                            <img class="greenway" src="GreenWay.png" alt="Greenway">
+                        </p>
+                    </div>
+                    <div class="text">
+                        <p class="fs-1 fw-bold">Greenway Foundation Inc.</p>
+                    </div>
+                    <div class="suche">
+                        <form>
+                            <input type="suche" class="form-control" name="suche" placeholder="Suche">
+                        </form>
+                    </div>
+            </div>
+        </header>
+    
+    <main>
+        <!--Deklaration des Navigationsmenü im Hauptteil-->
+        <nav class="p-0" dir="auto">
+            <ul class="nav">
+                <li class="nav-item"><a href="home.html">Home</a></li>
+                <li class="nav-item"><a href="services.html">Leistungen</a></li>
+                <li class="nav-item"><a href="projects.html">Projekte</a></li>
+                <li class="nav-item"><a href="apply.html">Bewirb dich!</a></li>
+    
+            </ul>
+        </nav>
+        <!-- Entwerfen der Komponenten des Hauptteils mit 2 Textboxen, einer Suchleiste für das Filtern
+        der Tabelle und die Tabelle mit seinen Einträgen-->
+        <div class="m-0">
+            <section class="list-group">
+                <h1 class="list-group-item mb-0">Willkommen bei Greenway Foundation</h1>
+                <p class="list-group-item">
+                    Als Greenway, eine Non-Profit-Organisation, verfolgen wir leidenschaftlich unsere Mission,
+                    unseren Planeten vor den schädlichen Auswirkungen des Klimawandels zu schützen. Unser Ziel 
+                    ist es, nachhaltige Lösungen zu fördern, die den ökologischen Fußabdruck minimieren und die 
+                    Umwelt langfristig bewahren. Durch eine umfassende Perspektive setzen wir uns dafür ein, 
+                    das Bewusstsein für die drängenden Herausforderungen des Klimaschutzes zu schärfen und 
+                    gemeinschaftsorientierte Maßnahmen zu initiieren. In Forschung, Bildung und konkreten 
+                    Umweltschutzprojekten sind wir aktiv tätig, um eine lebenswerte Zukunft für kommende 
+                    Generationen sicherzustellen. Als Organisation stehen wir für Zusammenarbeit, 
+                    Innovation und eine nachhaltige Veränderung im Einklang mit den natürlichen 
+                    Ressourcen unserer Erde.</p>
+                </p>
+            </section>
+            <section class="list-group">
+                <h2 class="list-group-item mb-0">Wer produziert am meisten CO²-Emissionen?</h2>
+                <p class="list-group-item">
+                    Die nachstehende Tabelle beinhaltet die Top 20 Unternehmen nach deren CO²-Emissionen.
+                    Die Tabelle ist unterteilt in Land des Unternehmens, Name des Unternehmens und deren.
+                    CO²-Emissions Wert in Milliarden Tonnen. Für das Filtern der Einträge kann das 
+                    "Suche"-Feld verwendet werden.</p>
+            </section>
+
+                    
+                <script type="importmap">
+                    {
+                        "imports": {
+                            "vue": "https://unpkg.com/vue@3.4.21/dist/vue.esm-browser.js",
+                            "vue/server-renderer": "https://cdn.jsdelivr.net/npm/@vue/server-renderer@3.4.21/dist/server-renderer.esm-browser.js"
+                        },
+                        "scopes": {}
+                        }
+                </script>
+                
+                
+                <script type="module">
+                    /* Definition der Ausgabe der Tabelleneinträge*/
+                    import DemoGrid from './grid.js'
+                    import { createApp, ref } from 'vue'
+                    
+                    createApp({
+                        components: {
+                            DemoGrid
+                        },
+                        setup() {
+                            const searchQuery = ref('')
+                            const gridColumns = ['land', 'unternehmen', 'co2']
+                            const gridData = [
+                            { land: 'USA', unternehmen: 'Chevron', co2: 43.351 },
+                            { land: 'Russland', unternehmen: 'Gazprom', co2: 42.232 },
+                            { land: 'USA', unternehmen: 'ExxonMobile', co2: 41.943 },
+                            { land: 'Iran', unternehmen: 'National Iranian Oil Co.', co2:35.658  },
+                            { land: 'Großbrittanien', unternehmen: 'BP', co2: 34.015 },
+                            { land: 'Niederlande', unternehmen: 'Royal Dutch Shell', co2: 31.948 },
+                            { land: 'Indien', unternehmen: 'Coal India', co2:23.124  },
+                            { land: 'Mexiko', unternehmen: 'Permex', co2: 22.645 },
+                            { land: 'Venezuela', unternehmen: 'Petroleos de Venezuela', co2: 15.745 },
+                            { land: 'China', unternehmen: 'PetroChina', co2: 15.632 },
+                            { land: 'USA', unternehmen: 'Peabody Energy', co2: 15.385 },
+                            { land: 'USA', unternehmen: 'ChonocoPhilips', co2: 15.229 },
+                            { land: 'Arabische Emirate', unternehmen: 'Abu Dhabi National Oil Co.', co2: 13.847 },
+                            { land: 'Kuweit', unternehmen: 'Kuwait Petroleum Corp.', co2: 13.479 },
+                            { land: 'Irak', unternehmen: 'Iraq National Oil Co.', co2: 12.596 },
+                            { land: 'Frankreich', unternehmen: 'Total SA', co2: 12.352  },
+                            { land: 'Algerien', unternehmen: 'Sonatrach', co2: 12.302 },
+                            { land: 'Australien', unternehmen: 'BHPO Billiton', co2: 9.802 },
+                            { land: 'Brasilien', unternehmen: 'Petrobras', co2: 8.676 }
+                            ]
+                    
+                        return {
+                            searchQuery,
+                            gridColumns,
+                            gridData
+                        }
+                    }
+                    }).mount('#app')
+    
+                    /* Definition der Funktion Fehlermeldungen für Einträge im globalen Suchfeld auszugeben wenn Suchbegriffe zu kurz sind 
+                    oder noch nicht implementiert wurden.*/
+                    document.querySelector("form").onsubmit = function() {
+                        let suche = document.querySelector("input").value;
+                        if (suche.length < 3) {
+                            alert("zu kurzer Suchbegriff");
+                        } else {
+                            alert("Suche nach \"" + suche + "\" noch nicht implementiert");
+                        }
+                        return false;
+                    }
+                </script>
+
+                <section class="list-group">
+                    <div id="app">
+                        <form id="search">
+                            Suche: <input name="query" v-model="searchQuery">
+                        </form>
+                        <demo-grid
+                            :data="gridData"
+                            :columns="gridColumns"
+                            :filter-key="searchQuery">
+                        </demo-grid>
+                    </div>
+
+                    <template>
+                        <!--Definition der Funktion die Tabelle suchend zu filtern nach Land oder Unternehmen -->
+                        <table id="table" v-if="filteredData.length">
+                            <thead>
+                                <tr>
+                                <th v-for="key in columns"
+                                    @click="sortBy(key)"
+                                    :class="{ active: sortKey == key }">
+                                    {{ capitalize(key) }}
+                                    <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+                                    </span>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="entry in filteredData">
+                                    <td v-for="key in columns">
+                                        {{entry[key]}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p v-else>Keine Treffer gefunden</p>
+                    </template>
+                </section>
+</main>
+
+<footer>
+    <!--Entwerfen der Fußzeile mit Datenschutz, Impressum sowie Verweise auf die sozialen Medien des Unternehmens.-->
+    <div class="d-flex">
+        <div class="links">
+            <ul class="nav">
+                <li class="nav-item pt-2"><a class="nav-link" href="privacy.html">Datenschutz</a></li>
+                <li class="nav-item pt-2"><a class="nav-link" href="imprint.html">Impressum</a></li>
+            </ul>
+        </div>
+        <div class="socials">
+            <ul class="nav">
+                <li class="nav-item mx-1" class="nav-link">
+                <a class="lk" aria-current="page" href="https://www.linkedin.com/WebAppStartup">
+                    <img class="linkedin" src="Linkedin.png" alt="Linkedin">
+                </a>
+                </li>
+                <li class="nav-item mx-1" class="nav-link">
+                <a class="fb" aria-disabled="true" href="https://www.facebook.com/WebAppStartup">
+                    <img class="facebook" src="facebook.png" alt="Facebook">
+                </a>
+                </li>
+                <li class="nav-item mx-1" class="nav-link">
+                <a class="ig" aria-disabled="true" href="https://www.instagram.com/WebAppStartup">
+                    <img class="instagram" src="instagram.png" alt="Instagram">
+                </a>
+                </li>
+                <li class="nav-item mx-1" class="nav-link">
+                <a class="ph" aria-disabled="true" href="contact.html">
+                    <img class="contact" src="phone.png" alt="Kontakt">
+                </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </footer>
+</body>
